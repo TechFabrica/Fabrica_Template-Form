@@ -5,41 +5,61 @@ VMasker(document.querySelector('#form #phone-number')).maskPattern('(99)99999-99
 var $form = document.querySelector('#form');
 
 var $inputs = document.querySelectorAll('#form .form_field input');
-
 var $selects = document.querySelectorAll('#form .form_field select');
+var fields = combineFields($inputs, $selects);
+
+var $error_msg = document.querySelector('#error-msg')
 
 var $submit_btn = document.querySelector('#form #submit_btn');
 
-// Função de ativação do botão após preencimento dos campos
+buttonFieldResponse($submit_btn, fields);
 
-$submit_btn.disabled = true;
 
-inputs_consulta.forEach(function(){
-    this.addEventListener('input', consultaFieldsValidation);
-})
-
-toggleSubmitButtonEnable($submit_btn, checkEmptyFields($inputs, $selects));
-
-function checkEmptyFields(inputs, selects){
-    var emptyInputs = inputs.length + selects.length;
+function buttonFieldResponse(btn, fields){
     
-    for( i = 0; i < inputs.length; i++ ){
-        if(inputs[i].value != ''){
-            emptyInputs--;
+    btn.disabled = true;
+    
+    addListeners(fields, 'input', checkEmptyFields);
+
+    function addListeners(elementList, event, fn){
+        for( var i = 0; i < elementList.length; i++ ){
+            elementList[i].addEventListener(event, fn);
         }
     }
-    for( i = 0; i < selects.length; i++ ){
-        if(selects[i].value != ''){
-            emptyInputs--;
+    
+    function checkEmptyFields(){
+        var emptyInputs = fields.length;
+        
+        for( var i = 0; i < fields.length; i++ ){
+            if(fields[i].value != ''){
+                emptyInputs--;
+            }
+        }
+        toggleButtonStatus(emptyInputs);
+    }
+    
+    function toggleButtonStatus(emptyInputs){
+        if(emptyInputs == 0){
+            btn.disabled = false;
+        } else {
+            btn.disabled = true;
         }
     }
-    return emptyInputs;
 }
 
-function toggleSubmitButtonEnable (btn, emptyInputs){
-    if(emptyInputs == 0){
-        btn.disabled = false;
-    } else {
-        btn.disabled = true;
+function combineFields(inputs, selects){
+    var combined = [];
+
+    for( var i = 0; i < inputs.length; i++ ){
+        combined.push(inputs[i]);
     }
+    for( var i = 0; i < selects.length; i++ ){
+        combined.push(selects[i]);
+    }
+    return combined;
+}
+
+function validateEmail(email) {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
 }

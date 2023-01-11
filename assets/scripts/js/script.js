@@ -1,1 +1,65 @@
-!function(e,t){"function"==typeof define&&define.amd?define(t):e.VMasker=t()}(this,function(){function a(e){return(e={precision:(e=e||{}).hasOwnProperty("precision")?e.precision:2,separator:e.separator||",",delimiter:e.delimiter||".",unit:e.unit&&e.unit.replace(/[\s]/g,"")+" "||"",suffixUnit:e.suffixUnit&&" "+e.suffixUnit.replace(/[\s]/g,"")||"",zeroCents:e.zeroCents,lastOutput:e.lastOutput}).moneyPrecision=e.zeroCents?0:e.precision,e}function t(e){this.elements=e}var s=[8,9,16,17,18,36,37,38,39,40,91,92,93],o=(t.prototype.unbindElementToMask=function(){for(var e=0,t=this.elements.length;e<t;e++)this.elements[e].lastOutput="",this.elements[e].onkeyup=!1,this.elements[e].onkeydown=!1,this.elements[e].value.length&&(this.elements[e].value=this.elements[e].value.replace(/\D/g,""))},t.prototype.bindElementToMask=function(n){function e(e){var t=(e=e||window.event).target||e.srcElement;!function(e){for(var t=0,n=s.length;t<n;t++)if(e==s[t])return!1;return!0}(e.keyCode)||setTimeout(function(){i.opts.lastOutput=t.lastOutput,t.value=o[n](t.value,i.opts),t.lastOutput=t.value,t.setSelectionRange&&i.opts.suffixUnit&&t.setSelectionRange(t.value.length,t.value.length-i.opts.suffixUnit.length)},0)}for(var i=this,t=0,r=this.elements.length;t<r;t++)this.elements[t].lastOutput="",this.elements[t].onkeyup=e,this.elements[t].value.length&&(this.elements[t].value=o[n](this.elements[t].value,this.opts))},t.prototype.maskMoney=function(e){this.opts=a(e),this.bindElementToMask("toMoney")},t.prototype.maskNumber=function(){this.opts={},this.bindElementToMask("toNumber")},t.prototype.maskPattern=function(e){this.opts={pattern:e},this.bindElementToMask("toPattern")},t.prototype.unMask=function(){this.unbindElementToMask()},function(e){if(e)return e="length"in e?e.length?e:[]:[e],new t(e);throw new Error("VanillaMasker: There is no element to bind.")});return o.toMoney=function(e,t){for(var n=(e=(t=a(t)).zeroCents&&(t.lastOutput=t.lastOutput||"",n="("+t.separator+"[0]{0,"+t.precision+"})",n=new RegExp(n,"g"),i=e.toString().replace(/[\D]/g,"").length||0,r=t.lastOutput.toString().replace(/[\D]/g,"").length||0,e=e.toString().replace(n,""),i<r)?e.slice(0,e.length-1):e).toString().replace(/[\D]/g,""),i=new RegExp("^(0|\\"+t.delimiter+")"),r=new RegExp("(\\"+t.separator+")$"),s=n.substr(0,n.length-t.moneyPrecision),o=s.substr(0,s.length%3),e=new Array(t.precision+1).join("0"),l=0,u=(s=s.substr(s.length%3,s.length)).length;l<u;l++)l%3==0&&(o+=t.delimiter),o+=s[l];return o=(o=o.replace(i,"")).length?o:"0",t.zeroCents||(i=n.length-t.precision,i=(n=n.substr(i,t.precision)).length,i=t.precision>i?t.precision:i,e=(e+n).slice(-i)),(t.unit+o+t.separator+e+t.suffixUnit).replace(r,"")},o.toPattern=function(e,t){for(var t="object"==typeof t?t.pattern:t,n=t.replace(/\W/g,""),i=t.split(""),r=e.toString().replace(/\W/g,""),s=r.replace(/\W/g,""),o=0,l=i.length,u=0;u<l;u++){if(o>=r.length){if(n.length==s.length)return i.join("");break}"9"===i[u]&&r[o].match(/[0-9]/)||"A"===i[u]&&r[o].match(/[a-zA-Z]/)||"S"===i[u]&&r[o].match(/[0-9a-zA-Z]/)?i[u]=r[o++]:"9"!==i[u]&&"A"!==i[u]&&"S"!==i[u]||(i=i.slice(0,u))}return i.join("").substr(0,u)},o.toNumber=function(e){return e.toString().replace(/(?!^-)[^0-9]/g,"")},o}),VMasker(document.querySelector("#form #phone-number")).maskPattern("(99)99999-9999");var $form=document.querySelector("#form"),$inputs=document.querySelectorAll("#form .form_field input"),$selects=document.querySelectorAll("#form .form_field select"),$submit_btn=document.querySelector("#form #submit_btn");function checkEmptyFields(e,t){var n=e.length+t.length;for(i=0;i<e.length;i++)""!=e[i].value&&n--;for(i=0;i<t.length;i++)""!=t[i].value&&n--;return n}function toggleSubmitButtonEnable(e,t){e.disabled=0!=t}$submit_btn.disabled=!0,inputs_consulta.forEach(function(){this.addEventListener("input",consultaFieldsValidation)}),toggleSubmitButtonEnable($submit_btn,checkEmptyFields($inputs,$selects));
+// Mascaras dos Inputs
+!function(a,b){"function"==typeof define&&define.amd?define(b):a.VMasker=b()}(this,function(){var a="9",b="A",c="S",d=[8,9,16,17,18,36,37,38,39,40,91,92,93],e=function(a){for(var b=0,c=d.length;c>b;b++)if(a==d[b])return!1;return!0},f=function(a){return a=a||{},a={precision:a.hasOwnProperty("precision")?a.precision:2,separator:a.separator||",",delimiter:a.delimiter||".",unit:a.unit&&a.unit.replace(/[\s]/g,"")+" "||"",suffixUnit:a.suffixUnit&&" "+a.suffixUnit.replace(/[\s]/g,"")||"",zeroCents:a.zeroCents,lastOutput:a.lastOutput},a.moneyPrecision=a.zeroCents?0:a.precision,a},g=function(a){this.elements=a};g.prototype.unbindElementToMask=function(){for(var a=0,b=this.elements.length;b>a;a++)this.elements[a].lastOutput="",this.elements[a].onkeyup=!1,this.elements[a].onkeydown=!1,this.elements[a].value.length&&(this.elements[a].value=this.elements[a].value.replace(/\D/g,""))},g.prototype.bindElementToMask=function(a){for(var b=this,c=function(c){c=c||window.event;var d=c.target||c.srcElement;e(c.keyCode)&&setTimeout(function(){b.opts.lastOutput=d.lastOutput,d.value=h[a](d.value,b.opts),d.lastOutput=d.value,d.setSelectionRange&&b.opts.suffixUnit&&d.setSelectionRange(d.value.length,d.value.length-b.opts.suffixUnit.length)},0)},d=0,f=this.elements.length;f>d;d++)this.elements[d].lastOutput="",this.elements[d].onkeyup=c,this.elements[d].value.length&&(this.elements[d].value=h[a](this.elements[d].value,this.opts))},g.prototype.maskMoney=function(a){this.opts=f(a),this.bindElementToMask("toMoney")},g.prototype.maskNumber=function(){this.opts={},this.bindElementToMask("toNumber")},g.prototype.maskPattern=function(a){this.opts={pattern:a},this.bindElementToMask("toPattern")},g.prototype.unMask=function(){this.unbindElementToMask()};var h=function(a){if(!a)throw new Error("VanillaMasker: There is no element to bind.");var b="length"in a?a.length?a:[]:[a];return new g(b)};return h.toMoney=function(a,b){if(b=f(b),b.zeroCents){b.lastOutput=b.lastOutput||"";var c="("+b.separator+"[0]{0,"+b.precision+"})",d=new RegExp(c,"g"),e=a.toString().replace(/[\D]/g,"").length||0,g=b.lastOutput.toString().replace(/[\D]/g,"").length||0;a=a.toString().replace(d,""),g>e&&(a=a.slice(0,a.length-1))}var h=a.toString().replace(/[\D]/g,""),i=new RegExp("^(0|\\"+b.delimiter+")"),j=new RegExp("(\\"+b.separator+")$"),k=h.substr(0,h.length-b.moneyPrecision),l=k.substr(0,k.length%3),m=new Array(b.precision+1).join("0");k=k.substr(k.length%3,k.length);for(var n=0,o=k.length;o>n;n++)n%3===0&&(l+=b.delimiter),l+=k[n];if(l=l.replace(i,""),l=l.length?l:"0",!b.zeroCents){var p=h.length-b.precision,q=h.substr(p,b.precision),r=q.length,s=b.precision>r?b.precision:r;m=(m+q).slice(-s)}var t=b.unit+l+b.separator+m+b.suffixUnit;return t.replace(j,"")},h.toPattern=function(d,e){var f,g="object"==typeof e?e.pattern:e,h=g.replace(/\W/g,""),i=g.split(""),j=d.toString().replace(/\W/g,""),k=j.replace(/\W/g,""),l=0,m=i.length;for(f=0;m>f;f++){if(l>=j.length){if(h.length==k.length)return i.join("");break}i[f]===a&&j[l].match(/[0-9]/)||i[f]===b&&j[l].match(/[a-zA-Z]/)||i[f]===c&&j[l].match(/[0-9a-zA-Z]/)?i[f]=j[l++]:(i[f]===a||i[f]===b||i[f]===c)&&(i=i.slice(0,f))}return i.join("").substr(0,f)},h.toNumber=function(a){return a.toString().replace(/(?!^-)[^0-9]/g,"")},h});
+VMasker(document.querySelector('#form #phone-number')).maskPattern('(99)99999-9999')
+
+var $form = document.querySelector('#form');
+
+var $inputs = document.querySelectorAll('#form .form_field input');
+var $selects = document.querySelectorAll('#form .form_field select');
+var fields = combineFields($inputs, $selects);
+
+var $error_msg = document.querySelector('#error-msg')
+
+var $submit_btn = document.querySelector('#form #submit_btn');
+
+buttonFieldResponse($submit_btn, fields);
+
+
+function buttonFieldResponse(btn, fields){
+    
+    btn.disabled = true;
+    
+    addListeners(fields, 'input', checkEmptyFields);
+
+    function addListeners(elementList, event, fn){
+        for( var i = 0; i < elementList.length; i++ ){
+            elementList[i].addEventListener(event, fn);
+        }
+    }
+    
+    function checkEmptyFields(){
+        var emptyInputs = fields.length;
+        
+        for( var i = 0; i < fields.length; i++ ){
+            if(fields[i].value != ''){
+                emptyInputs--;
+            }
+        }
+        toggleButtonStatus(emptyInputs);
+    }
+    
+    function toggleButtonStatus(emptyInputs){
+        if(emptyInputs == 0){
+            btn.disabled = false;
+        } else {
+            btn.disabled = true;
+        }
+    }
+}
+
+function combineFields(inputs, selects){
+    var combined = [];
+
+    for( var i = 0; i < inputs.length; i++ ){
+        combined.push(inputs[i]);
+    }
+    for( var i = 0; i < selects.length; i++ ){
+        combined.push(selects[i]);
+    }
+    return combined;
+}
+
+function validateEmail(email) {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}

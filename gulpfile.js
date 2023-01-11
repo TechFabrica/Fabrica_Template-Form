@@ -30,7 +30,7 @@ function jsTask(){
         './template-parts/form/form.js'
     ])
         .pipe(concat('script.js'))
-        .pipe(jsUglify())
+        // .pipe(jsUglify())
         .pipe(dest('./assets/scripts/js/'))
 }
 
