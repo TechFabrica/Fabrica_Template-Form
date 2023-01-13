@@ -10,11 +10,11 @@ $email = $_POST['email'];
 $select1 = $_POST['select1'];
 $select2 = $_POST['select2'];
 
-$host = '';
-$username = '';
-$password = '';
-$dbname = '';
-$data = date("Y-m-d H:i:s");
+$host = ''; // add_data
+$username = ''; // add_data
+$password = ''; // add_data
+$dbname = ''; // add_data
+$date = date("d-m-Y H:i:s");
 
 $conn = mysqli_connect($host, $username, $password, $dbname);
 
@@ -23,10 +23,10 @@ if (mysqli_connect_errno())
     echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
 else{
-    echo "Conexao feita com sucesso";
+    echo "Connection successful!";
 }
-
-$sql = "INSERT INTO `form` (`id`, `data`, `name`, `phone`, `email`, `select1`, `select2`) VALUES (NULL, '{$data}', '{$name}', '{$phone}', '{$email}', '{$select1}', '{$select1}');";
+// pesquisar como impedir SQL injection em envio de dados de formulário por PHP e alterar
+$sql = "INSERT INTO `form` (`id`, `data`, `name`, `phone`, `email`, `select1`, `select2`) VALUES (NULL, '{$date}', '{$name}', '{$phone}', '{$email}', '{$select1}', '{$select1}');";
 $rs = mysqli_query($conn, $sql);
 
 if($rs){

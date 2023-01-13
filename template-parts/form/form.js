@@ -3,53 +3,51 @@
 VMasker(document.querySelector('#form #phone-number')).maskPattern('(99)99999-9999')
 
 var $form = document.querySelector('#form');
-
 var $inputs = document.querySelectorAll('#form .form_field input');
 var $selects = document.querySelectorAll('#form .form_field select');
-var fields = combineFields($inputs, $selects);
-
 var $error_msg = document.querySelector('#error-msg')
-
 var $submit_btn = document.querySelector('#form #submit_btn');
+
+var server_url = 'form.php'; // add_data
+
+var fields = combineFields($inputs, $selects);
 
 buttonFieldResponse($submit_btn, fields);
 
+$submit_btn.addEventListener('click', function(){
+    sendData(data, server_url);
+});
+
+function addListeners(elementList, event, fn){
+    for( var i = 0; i < elementList.length; i++ ){
+        elementList[i].addEventListener(event, fn);
+    }
+}
 
 function buttonFieldResponse(btn, fields){
     
     btn.disabled = true;
     
-    addListeners(fields, 'input', checkEmptyFields);
+    addListeners(fields, 'input', function(){
+        toggleButtonStatus(checkEmptyFields(fields));
+    });
+}
 
-    function addListeners(elementList, event, fn){
-        for( var i = 0; i < elementList.length; i++ ){
-            elementList[i].addEventListener(event, fn);
+function checkEmptyFields(fields){
+    var emptyInputs = fields.length;
+    
+    for( var i = 0; i < fields.length; i++ ){
+        if(fields[i].value != ''){
+            emptyInputs--;
         }
     }
     
-    function checkEmptyFields(){
-        var emptyInputs = fields.length;
-        
-        for( var i = 0; i < fields.length; i++ ){
-            if(fields[i].value != ''){
-                emptyInputs--;
-            }
-        }
-        toggleButtonStatus(emptyInputs);
-    }
-    
-    function toggleButtonStatus(emptyInputs){
-        if(emptyInputs == 0){
-            btn.disabled = false;
-        } else {
-            btn.disabled = true;
-        }
-    }
+    return emptyInputs;
 }
 
 function combineFields(inputs, selects){
     var combined = [];
-
+    
     for( var i = 0; i < inputs.length; i++ ){
         combined.push(inputs[i]);
     }
@@ -57,6 +55,48 @@ function combineFields(inputs, selects){
         combined.push(selects[i]);
     }
     return combined;
+}
+
+function parseJSON(raw_data){
+    var parsed_data = {};
+    
+    raw_data = JSON.stringify(data);
+    raw_data = JSON.parse(data);
+
+    var parsed_data = {
+        name: raw_data[0],
+        phone: raw_data[1],
+        email: raw_data[2],
+        select1: raw_data[3],
+        select2: raw_data[4]
+    }
+    
+    return parsed_data;
+}
+
+async function sendData(data, url){
+
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function(){
+        if( xhttp.readyState == 4 && xhttp.status == 200){
+            // mensagem de "envio realizado com sucesso" para o usuário ou redirecionamento para a TYP
+        } else {
+            // mensagem de "erro no envio de dados" para o usuário
+        }
+    }
+
+    xhttp.open("POST", url);
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.send(data);
+}
+
+function toggleButtonStatus(emptyFields){
+    if(emptyFields == 0){
+        btn.disabled = false;
+    } else {
+        btn.disabled = true;
+    }
 }
 
 function validateEmail(email) {
