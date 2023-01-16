@@ -1,0 +1,93 @@
+
+
+--- FUNCTIONS ---
+
+addListeners(elementList, event, fn)
+
+    Adiciona listeners em mútiplos elementos do DOM.
+
+    Parâmetros:
+        elementList: array de elementos
+        event: evento
+        fn: função que o evento deve chamar
+-----
+
+buttonFieldResponse(btn, fields)
+
+    Desabilita o botão de submit.
+    Chama a função addListeners, adicionando listeners de input nos campos do formulário.
+    Esses listeners chamam a função toggleButtonStatus, que habilita o botão de submit quando todos os campos estiverem preenchidos.
+
+    Parâmetros:
+        btn: botão que deve ter interação com os campos
+        fields: campos que devem ter interação com o botão
+-----
+
+checkEmptyFields(fields)
+
+    Checa e retorna a quantidade de campos vazios.
+
+    Parâmetro:
+        fields: campos que devem ser checados
+-----
+
+combineFields(inputs, selects)
+
+    Retorna um array que combina os inputs e selects passados por parâmetros, facilitando o tratamento de inputs diferentes ao longo do script.
+
+    Parâmetros:
+        inputs: campos do tipo 'input' que devem ser combinados
+        selects: campos do tipo 'select' que devem ser combinados
+-----
+
+getFieldValues(fields, phoneIndex, emailIndex)
+
+    Valida os valores de telefone e email do formulário e, caso estejam de acordo, retorna um array com os dados de cada input.
+    Retorna vazio caso haja algum valor inválido.
+
+    Parâmetros:
+        fields: campos do formulário
+        phoneIndex: índice do campo de telefone no array 'fields'.
+        emailIndex: índice do campo de email no array 'fields'.
+-----
+
+parsedJSON(raw_data)
+
+    Trata os dados recebidos por parâmetro, retornando um objeto JSON com os valores.
+
+    Parâmetro:
+        raw_data: dados a serem tratados
+-----
+
+sendData(data, url)
+
+    Envia dados via XMLHttpRequest e atualiza o status do formulário de acordo com o resultado do requerimento.
+
+    Parâmetros:
+        data: objeto JSON a ser enviado
+        url: url para a qual os dados serão enviados
+-----
+
+toggleButtonStatus(btn, emptyFields)
+
+    Habilita o botão caso todos os campos do formulário estejam preenchidos.
+
+    Parâmetros:
+        btn: botão a ser alterado
+        emptyFields: quantidade de campos vazios no formulário
+-----
+
+validateEmail(email)
+
+    Retorna um booleano de acordo com a validação da string recebida por parâmetro, confere se ela é um email com '@' e '.' em seu conteúdo.
+
+    Parâmetro:
+        email: string a ser validada
+------
+
+updateFormStatus(success)
+
+    Atualiza o front-end com o resultado do envio de dados do formulário.
+
+    Parâmetro:
+        success: booleano referente ao sucesso ou falha no envio
