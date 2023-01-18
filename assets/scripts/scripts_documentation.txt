@@ -1,8 +1,34 @@
+--- FLUXO ---
+
+https://miro.com/app/board/uXjVPwim1sI=/?share_link_id=958969580332
+
+----------
 
 
---- FUNCTIONS ---
+--- VARIÁVEIS GLOBAIS ---
 
-addListeners(elementList, event, fn)
+- DOM -
+
+$form
+$inputs
+$selects
+$error_msg = span para mensagens de erro
+$submit_btn
+
+-----
+
+server_url = url do servidor de envio
+
+fields = array combinado de inputs e selects
+phoneIndex = índice do campo de telefone no array 'fields'
+emailIndex = índice do campo de email no array 'fields'
+
+----------
+
+
+--- FUNÇÕES ---
+
+addMultipleListeners(elementList, event, fn)
 
     Adiciona listeners em mútiplos elementos do DOM.
 
@@ -83,7 +109,7 @@ validateEmail(email)
 
     Parâmetro:
         email: string a ser validada
-------
+-----
 
 updateFormStatus(success)
 
@@ -91,3 +117,5 @@ updateFormStatus(success)
 
     Parâmetro:
         success: booleano referente ao sucesso ou falha no envio
+
+----------
