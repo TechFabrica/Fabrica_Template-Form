@@ -17,7 +17,7 @@ var emailIndex = 2;
 buttonFieldResponse($submit_btn, fields);
 
 $submit_btn.addEventListener('click', function(e){
-    e.preventDefault;
+    e.preventDefault();
 
     var raw_data = getFieldValues(fields);
 
@@ -67,7 +67,9 @@ function combineFields(inputs, selects){
 }
 
 function getFieldValues(fields){
+    debugger
     var raw_data = [];
+    $error_msg.innerHTML = '';
     
     if( fields[phoneIndex].value.length >= 13 && validateEmail(fields[emailIndex].value)){
         for ( var i=0; i < fields.length; i++ ){
@@ -113,7 +115,7 @@ function parseJSON(raw_data){
 }
 
 async function sendData(data, url){
-    
+    debugger
     var xhttp = new XMLHttpRequest();
     
     xhttp.onreadystatechange = function(){
@@ -125,9 +127,9 @@ async function sendData(data, url){
             }
         }
     }
-
+    
     xhttp.open("POST", url);
-    xhttp.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhttp.send(JSON.stringify(data));
 }
 

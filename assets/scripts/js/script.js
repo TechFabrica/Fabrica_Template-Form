@@ -5,16 +5,19 @@ VMasker(document.querySelector('#form #phone')).maskPattern('(99)99999-9999')
 var $form = document.querySelector('#form');
 var $inputs = document.querySelectorAll('#form .form_field input');
 var $selects = document.querySelectorAll('#form .form_field select');
-var $error_msg = document.querySelector('#error-msg')
+var $error_msg = document.querySelector('#error-msg');
 var $submit_btn = document.querySelector('#form #submit_btn');
 
 var server_url = 'https://fabrica.com.br/teste/scripts/form.php'; // add_data
+
 var fields = combineFields($inputs, $selects);
+var phoneIndex = 1;
+var emailIndex = 2;
 
 buttonFieldResponse($submit_btn, fields);
 
 $submit_btn.addEventListener('click', function(e){
-    e.preventDefault;
+    e.preventDefault();
 
     var raw_data = getFieldValues(fields);
 
@@ -25,7 +28,7 @@ $submit_btn.addEventListener('click', function(e){
     }
 });
 
-function addListeners(elementList, event, fn){
+function addMultipleListeners(elementList, event, fn){
     for( var i = 0; i < elementList.length; i++ ){
         elementList[i].addEventListener(event, fn);
     }
@@ -35,7 +38,7 @@ function buttonFieldResponse(btn, fields){
     
     btn.disabled = true;
 
-    addListeners(fields, 'input', function(){
+    addMultipleListeners(fields, 'input', function(){
         toggleButtonStatus(btn, checkEmptyFields(fields));
     });
 }
@@ -63,8 +66,10 @@ function combineFields(inputs, selects){
     return combined;
 }
 
-function getFieldValues(fields, phoneIndex, emailIndex){
+function getFieldValues(fields){
+    debugger
     var raw_data = [];
+    $error_msg.innerHTML = '';
     
     if( fields[phoneIndex].value.length >= 13 && validateEmail(fields[emailIndex].value)){
         for ( var i=0; i < fields.length; i++ ){
@@ -110,7 +115,7 @@ function parseJSON(raw_data){
 }
 
 async function sendData(data, url){
-    
+    debugger
     var xhttp = new XMLHttpRequest();
     
     xhttp.onreadystatechange = function(){
@@ -122,9 +127,9 @@ async function sendData(data, url){
             }
         }
     }
-
+    
     xhttp.open("POST", url);
-    xhttp.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhttp.send(JSON.stringify(data));
 }
 
