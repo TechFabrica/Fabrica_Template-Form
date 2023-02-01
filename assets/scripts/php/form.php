@@ -11,7 +11,7 @@ $name = $data->name;
 $phone = $data->phone;
 $email = $data->email;
 $select1 = $data->select1;
-$select2 = $data->select;
+$select2 = $data->select2;
 
 $host = 'teste_fabrica.mysql.dbaas.com.br'; // !add_data
 $username = 'teste_fabrica'; // !add_data
@@ -28,7 +28,7 @@ if (mysqli_connect_error()){
 }
 
 // pesquisar como impedir SQL injection em envio de dados de formulário por PHP e alterar
-$sql = "INSERT INTO `teste_fabrica_script_form` (`id`, `date`, `name`, `phone`, `email`, `select1`, `select2`) VALUES (NULL, '{$date}', '{$name}', '{$phone}', '{$email}', '{$select1}', '{$select1}');";
+$sql = "INSERT INTO `teste_fabrica_script_form` (`id`, `date`, `name`, `phone`, `email`, `select1`, `select2`) VALUES (NULL, '{$date}', '{$name}', '{$phone}', '{$email}', '{$select1}', '{$select2}');";
 $rs = mysqli_query($conn, $sql);
 
 // if($rs){
